@@ -25,11 +25,6 @@ def generate_text_vectors(input_filename):
 
 
 def run_embedding(model_name, vec_text, output_filename):
-    print(torch.cuda.is_available())
-    print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else "No CUDA")
-    print(torch.__version__)
-    print(torch.version.cuda)
-
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
