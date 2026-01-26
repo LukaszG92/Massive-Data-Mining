@@ -1,4 +1,5 @@
 numpy
 torch
+pandas
 sentence-transformers
 scikit-learn
