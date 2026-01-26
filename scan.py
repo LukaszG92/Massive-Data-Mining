@@ -3,7 +3,7 @@ import numpy as np
 import itertools  # Standard library, già inclusa in Python
 from tqdm import tqdm  # pip install tqdm
 import multiprocessing
-
+import gc
 import dbscan_srr as dbscan
 from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
@@ -12,30 +12,35 @@ from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 # USER CONFIG (edit here)
 # -------------------------
 INPUT_NPY = "data/all-MiniLM-L6-v2_mean_centered.npy"
-OUT_JSON = "data/srr_tuning_report.json"
+OUT_JSON = "data/srr_tuning_report5.json"
 
 # SRR params grid
-DELTAS = [0.1, 0.05]  # probability of missing a point
-L_GBS = [4.0]  # memory constraint in GB
+DELTAS = [0.01]  # probability of missing a point
+L_GBS = [3.0]  # memory constraint in GB
 THREADS = 24
 
 # DBSCAN params grid
-MINPTS_VALUES = [30, 50, 80, 120]
-EPS_QUANTILES = [0.05, 0.10, 0.15, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80]
+MINPTS_VALUES = [ 10, 12, 15, 18]
+EPS_QUANTILES = [
+    0.15, 0.17, 0.19,
+    0.21, 0.23, 0.25,
+    0.27, 0.29, 0.31,
+    0.33, 0.35
+]
+
 KDIST_METRIC = "euclidean"
-MAX_EPS_PER_MINPTS = 12
+MAX_EPS_PER_MINPTS = 10
 
 # Stability check
 EPS_JITTER = 0.02  # +/-2%
 
 # Ranking / filtering
-NOISE_MAX = 0.80
-MAX_CLUSTER_SHARE_MAX = 0.50
-MIN_CLUSTERS = 2
+NOISE_MAX = 0.70
+MAX_CLUSTER_SHARE_MAX = 0.28
+MIN_CLUSTERS = 50
 TOPK = 10
 
-KDIST_SAMPLE_SIZE = None  # None = use full X
-
+KDIST_SAMPLE_SIZE = None
 
 # -------------------------
 # Helpers
@@ -229,6 +234,14 @@ for params in tqdm(param_grid, desc="Grid Search Progress", unit="run"):
     tqdm.write(f"  done: δ={delta} L={L_gb} minPts={minPts} eps={eps:.6f} "
                f"clusters={summ['n_clusters']} noise={summ['noise_frac']:.3f} "
                f"max_share={summ['max_cluster_share']:.3f} time={dt:.2f}s")
+
+    del labels, dt, stats
+    if 'labels_m' in locals(): del labels_m
+    if 'labels_p' in locals(): del labels_p
+    if 'summ' in locals(): del summ
+    if 'run_row' in locals(): del run_row
+
+    gc.collect()
 
 report = {
     "meta": {
