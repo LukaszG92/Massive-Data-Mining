@@ -1,0 +1,13 @@
+{
+  "input_npy": "data/embeddings/embeddings_v1_384.npy",
+  "params": {
+    "p_miss": 0.01,
+    "L_gb": 3.0,
+    "threads": 24,
+    "eps": 0.851339864730835,
+    "minPts": 10
+  },
+  "n": 52002,
+  "d": 384,
+  "unique_labels": 139
+}

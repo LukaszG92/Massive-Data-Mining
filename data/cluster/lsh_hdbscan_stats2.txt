@@ -1,0 +1,14 @@
+
+    ========================================
+    LSH-HDBSCAN RESULTS SUMMARY
+    ========================================
+    Total Points:     52002
+    Noise Points:     22194 (42.68%)
+    Valid Clusters:   81
+
+    Cluster Sizes:
+      - Average:      368.0
+      - Max (Giant?): 13999
+      - Min:          15
+    ========================================
+    

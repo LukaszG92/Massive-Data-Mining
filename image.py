@@ -1,104 +1,80 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import umap
-from sklearn.cluster import DBSCAN
-import os
+import pandas as pd
+import seaborn as sns
 
-# --- CONFIGURAZIONE ---
-VECTOR_FILE = "data/all-MiniLM-L6-v2_mean_centered.npy"  # Assicurati che il percorso sia giusto
-BEST_EPS = 0.851  # Parametro ottimale trovato
-BEST_MINPTS = 10  # Parametro ottimale trovato
+# --- CONFIG ---
+EMB_FILE = "data/embeddings/all-MiniLM-L6-v2_mean_centered.npy"
+LABEL_FILE = "data/cluster/lsh_hdbscan_labels2.npy"  # File corretto
+OUTPUT_IMG = "hdbscan_umap_final.png"
 
 
 def main():
-    print(f"--- 1. Caricamento Vettori da {VECTOR_FILE} ---")
-    if not os.path.exists(VECTOR_FILE):
-        print(f"ERRORE: File {VECTOR_FILE} non trovato!")
-        return
+    print("Loading data...")
+    X = np.load(EMB_FILE)
+    labels = np.load(LABEL_FILE)
 
-    # Carica i vettori (assumendo formato testo spaziale o csv)
-    try:
-        embeddings = np.loadtxt(VECTOR_FILE)
-        print(f"Vettori caricati: {embeddings.shape}")
-    except Exception as e:
-        print(f"Errore caricamento (provo con delimitatore ','): {e}")
-        embeddings = np.load(VECTOR_FILE)
+    # 1. Calcola UMAP (se non hai salvato l'embedding 2D prima)
+    print("Running UMAP...")
+    reducer = umap.UMAP(metric='cosine', n_neighbors=15, min_dist=0.1, random_state=42, verbose=True)
+    embedding = reducer.fit_transform(X)
 
-    print("\n--- 2. Esecuzione Clustering (SRR Configuration) ---")
-    print(f"Parametri: eps={BEST_EPS}, minPts={BEST_MINPTS}")
+    df = pd.DataFrame(embedding, columns=['x', 'y'])
+    df['label'] = labels
 
-    # Usiamo scikit-learn DBSCAN per semplicità (SRR è un wrapper ottimizzato,
-    # ma il risultato matematico è identico se la metrica è la stessa).
-    # IMPORTANTE: Se i vettori sono normalizzati, distanza Euclidea = Distanza Coseno
-    # Se non sei sicuro, usa metric='cosine'.
+    # Identifica il Cluster Gigante
+    cluster_counts = df[df['label'] != -1]['label'].value_counts()
+    giant_cluster_id = cluster_counts.idxmax()
+    giant_size = cluster_counts.max()
+    print(f"Giant Cluster ID: {giant_cluster_id} (Size: {giant_size})")
 
-    db = DBSCAN(eps=BEST_EPS, min_samples=BEST_MINPTS, metric='euclidean', n_jobs=-1)
-    labels = db.fit_predict(embeddings)
+    # Separa i dati in 3 categorie
+    mask_noise = df['label'] == -1
+    mask_giant = df['label'] == giant_cluster_id
+    mask_small = (~mask_noise) & (~mask_giant)
 
-    # Statistiche Rapide
-    n_clusters = len(set(labels)) - (1 if -1 in labels else 0)
-    n_noise = list(labels).count(-1)
-    noise_ratio = n_noise / len(labels)
+    plt.figure(figsize=(15, 12), dpi=300)
+    ax = plt.gca()
+    # Sfondo nero o bianco? Bianco per paper, Nero per slide. Facciamo Bianco.
+    ax.set_facecolor('white')
 
-    print(f"Risultato Rigenerato:")
-    print(f"  Clusters: {n_clusters}")
-    print(f"  Noise: {n_noise} ({noise_ratio:.1%})")
-
-    # Salva per il futuro!
-    np.save("data/best_labels.npy", labels)
-    print("Labels salvate in 'data/best_labels.npy'")
-
-    print("\n--- 3. Generazione Mappa UMAP 2D ---")
-    print("Calcolo proiezione 2D (questo step è il più lento, ~2-3 min)...")
-
-    reducer = umap.UMAP(
-        n_neighbors=50,  # Aumentato per struttura globale più chiara
-        min_dist=0.1,
-        n_components=2,
-        metric='cosine',  # Sempre cosine per embedding NLP
-        random_state=42,
-        verbose=True
+    # LAYER 1: Noise (Sfondo diffuso)
+    plt.scatter(
+        df.loc[mask_noise, 'x'], df.loc[mask_noise, 'y'],
+        c='#e0e0e0',  # Grigio chiarissimo
+        s=0.5, alpha=0.3,  # Molto trasparente
+        label=f'Noise (Long Tail) - {mask_noise.sum()} pts',
+        zorder=1
     )
-    embedding_2d = reducer.fit_transform(embeddings)
 
-    # --- PLOTTING ---
-    plt.figure(figsize=(16, 12), dpi=150)
+    # LAYER 2: Cluster Gigante (Struttura Base)
+    plt.scatter(
+        df.loc[mask_giant, 'x'], df.loc[mask_giant, 'y'],
+        c='#4a4a4a',  # Grigio scuro / Antracite
+        s=1.0, alpha=0.4,
+        label=f'Giant Core Cluster - {mask_giant.sum()} pts',
+        zorder=2
+    )
 
-    # Colori
-    unique_labels, counts = np.unique(labels, return_counts=True)
+    # LAYER 3: Cluster "Puri" (Gemme)
+    # Usiamo una colormap ciclica per distinguere i vicini
+    plt.scatter(
+        df.loc[mask_small, 'x'], df.loc[mask_small, 'y'],
+        c=df.loc[mask_small, 'label'],
+        cmap='turbo',  # Colori vibranti
+        s=3.0, alpha=1.0,  # Opachi e più grandi
+        label=f'Fine-Grained Clusters - {mask_small.sum()} pts',
+        zorder=3
+    )
 
-    # Identifica il blob (il cluster più grande escluso il noise)
-    valid_clusters = unique_labels[unique_labels != -1]
-    if len(valid_clusters) > 0:
-        blob_id = valid_clusters[np.argmax(counts[unique_labels != -1])]
-    else:
-        blob_id = -999
-
-    # 1. Noise (Grigio Sfondo)
-    mask_noise = (labels == -1)
-    plt.scatter(embedding_2d[mask_noise, 0], embedding_2d[mask_noise, 1],
-                c='#e0e0e0', s=1, alpha=0.2, label='Noise (Long Tail)')
-
-    # 2. Clusters Normali (Colorati)
-    mask_clusters = (labels != -1) & (labels != blob_id)
-    if np.sum(mask_clusters) > 0:
-        plt.scatter(embedding_2d[mask_clusters, 0], embedding_2d[mask_clusters, 1],
-                    c=labels[mask_clusters], cmap='Spectral', s=4, alpha=0.8, label='Task Clusters')
-
-    # 3. Blob (Rosso Evidente)
-    if blob_id != -999:
-        mask_blob = (labels == blob_id)
-        plt.scatter(embedding_2d[mask_blob, 0], embedding_2d[mask_blob, 1],
-                    c='crimson', s=2, alpha=0.4, label='Redundant Blob')
-
-    plt.title(f"Mappa Densità Alpaca (eps={BEST_EPS})", fontsize=18)
-    plt.legend(markerscale=5, loc='upper right')
+    plt.title("LSH-HDBSCAN Topological Segmentation", fontsize=18, fontweight='bold')
+    plt.legend(markerscale=5, fontsize=12, loc='upper right')
     plt.axis('off')
 
-    outfile = "alpaca_density_map.png"
-    plt.savefig(outfile, bbox_inches='tight')
-    print(f"\nFATTO! Immagine salvata come: {outfile}")
-    plt.show()
+    plt.tight_layout()
+    plt.savefig(OUTPUT_IMG)
+    print(f"Saved to {OUTPUT_IMG}")
 
 
 if __name__ == "__main__":

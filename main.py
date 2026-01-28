@@ -66,13 +66,13 @@ def main():
     models = ['all-MiniLM-L6-v2', 'all-mpnet-base-v2']
 
     for m in models:
-        filename = f'./embeddings/{m}.npy'
+        filename = f'data/embeddings/{m}.npy'
         if os.path.exists(filename):
             print(f"Embedding del modello {m} già calcolati nel file {filename}")
         else:
             run_embedding(m,text_vector, filename)
 
-        filename_normalized = f"./embeddings/{m}_normalized.npy"
+        filename_normalized = f"data/embeddings/{m}_normalized.npy"
 
         if os.path.exists(filename_normalized):
             print(f"Embedding del modello {m} già normalizzato nel file: {filename_normalized}")

@@ -1,4 +1,4 @@
 .idea
-/embeddings
+/data/embeddings
 .venv/
 .venv_wsl
