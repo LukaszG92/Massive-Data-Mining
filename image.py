@@ -6,7 +6,7 @@ import seaborn as sns
 
 # --- CONFIG ---
 EMB_FILE = "data/embeddings/all-MiniLM-L6-v2_mean_centered.npy"
-LABEL_FILE = "data/cluster/lsh_hdbscan_labels2.npy"  # File corretto
+LABEL_FILE = "data/cluster/LSH-HDBSCAN-OLD/lsh_hdbscan_labels2.npy"  # File corretto
 OUTPUT_IMG = "hdbscan_umap_final.png"
 
 

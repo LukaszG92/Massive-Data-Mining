@@ -1,0 +1,19 @@
+=== eps0.31_mpts40_L10_M18_t32 ===
+Reading input dataset...
+Reading data took: 5.9631
+Normalizing Data ...
+Concurrent LSHDBSCAN:
+	#points: 52002	#dims: 385	metric: angular
+	#HashTables: 10	#HyperPlanesPerHashTable: 18	#threads: 32	#batches: 100
+	Eps: 0.31	minPts: 40
+Performing concurrent clustering...
+Populating the concurrent way!
+Identifying core-buckets the concurrent way!
+Identifying and Performing the merge tasks the concurrent way!
+Performing concurrent relabeling!
+Saving clustering labels...
+real 11.01
+user 4.85
+sys 1.23
+Saved labels -> /mnt/c/Users/anton/PycharmProjects/Massive-Data-Mining/data/embeddings/experiments/labels_eps0.31_mpts40_L10_M18_t32.idx_concurrentlshdbscan
+Appended metrics -> /mnt/c/Users/anton/PycharmProjects/Massive-Data-Mining/data/embeddings/experiments/summary.tsv

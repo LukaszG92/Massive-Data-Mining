@@ -1,96 +1,106 @@
-import numpy as np
-import time
+# run_paper.py
 import os
-import sys
+import time
+from pathlib import Path
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import numpy as np
 
-from preprint.lsh_hdbscan import LSHHDBSCAN_Parallel as LSHHDBSCAN
-
-INPUT_FILE = "data/embeddings/all-MiniLM-L6-v2_mean_centered.npy"
-OUTPUT_FILE = "data/cluster/lsh_hdbscan_labels3.npy"
-OUTPUT_STATS = "data/cluster/lsh_hdbscan_stats3.txt"
-
-MIN_PTS = 15 # Minimo numero di punti per formare un cluster
-MIN_EPS = 0.5  # Densità massima (cluster molto stretti)
-MAX_EPS = 1.1  # Densità minima (recupera i cluster più larghi)
-NUM_LEVELS = 8  # Numero di "scatti" tra min e max eps
-N_JOBS = 24
+from preprint.lsh_hdbscan import LSHHDBSCANPaper
 
 
-# Parametri LSH (dal paper)
-C_APPROX = 1.5  # Fattore di approssimazione (1.5 bilancia velocità/precisione)
-DELTA = 0.20  # 1 - DELTA rappresenta Probabilità di successo
+# CONFIG (modifica qui)
+# ==========
+INPUT_PATH = "data/embeddings/all-MiniLM-L6-v2_mean_centered.npy"
+OUTPUT_LABELS = "data/cluster/LSH-HDBSCAN-NEW/labels1.npy"
+OUTPUT_HIERARCHY = "data/cluster/LSH-HDBSCAN-NEW/hierarchy1.npz"
+
+MINPTS = 10
+C = 2.0
+DELTA = 0.5
+GAMMA = 0.3
+
+ESTIMATE_PAIRS = 200_000
+RNG_SEED = 42
+
+VERBOSE_LSHDBSCAN = False
+
+CENTERRATIO = None
+RATIOOFFSET = None
+# ==========
 
 
 def main():
-    print(f"--> Loading embeddings from: {INPUT_FILE}")
-    if not os.path.exists(INPUT_FILE):
-        print(f"ERROR: File {INPUT_FILE} not found.")
-        return
+    # 0) Ensure output folders exist
+    Path(OUTPUT_LABELS).parent.mkdir(parents=True, exist_ok=True)
+    out_h_parent = Path(OUTPUT_HIERARCHY).parent
+    if str(out_h_parent) not in ("", "."):
+        out_h_parent.mkdir(parents=True, exist_ok=True)
 
-    X = np.load(INPUT_FILE)
-    print(f"    Shape: {X.shape} | Type: {X.dtype}")
+    # 1) Load data
+    X = np.load(INPUT_PATH)
+    X = np.asarray(X)
+    if X.ndim != 2:
+        raise ValueError(f"Mi aspetto una matrice 2D (n_samples, n_features), trovato shape={X.shape}")
 
-    print("\n--> Initializing LSH-HDBSCAN Wrapper")
-    print(f"    Epsilon Grid: {MIN_EPS} -> {MAX_EPS} ({NUM_LEVELS} levels)")
-    print(f"    LSH Params: c={C_APPROX}, delta={DELTA}, min_pts={MIN_PTS}")
+    print(f"Loaded X: shape={X.shape}, dtype={X.dtype}")
 
-    model = LSHHDBSCAN(
-        n_jobs=-N_JOBS,
-        min_pts=MIN_PTS,
-        min_eps=MIN_EPS,
-        max_eps=MAX_EPS,
-        num_levels=NUM_LEVELS,
-        c=C_APPROX,
-        delta=DELTA
+    # 2) Fit
+    model = LSHHDBSCANPaper(
+        minpts=int(MINPTS),
+        c=float(C),
+        mineps_target=0.6,
+        maxeps_target=1.2,
+        gamma=float(GAMMA),
+        centerratio=CENTERRATIO,
+        ratiooffset=RATIOOFFSET,
+        estimate_pairs=int(ESTIMATE_PAIRS),
+        rng_seed=int(RNG_SEED),
+        verbose_levels=True,
+        verbose_lshdbscan=bool(VERBOSE_LSHDBSCAN),
     )
 
-    print("\n--> Starting Hierarchical Clustering...")
-    start_time = time.time()
-
+    t0 = time.time()
     labels = model.fit_predict(X)
+    t1 = time.time()
 
-    elapsed = time.time() - start_time
-    print(f"\n--> DONE in {elapsed:.1f} seconds ({elapsed / 60:.1f} min)")
+    labels = np.asarray(labels, dtype=int)
 
-    n_points = len(labels)
-    n_noise = np.sum(labels == -1)
-    noise_ratio = n_noise / n_points
-    unique_labels = set(labels) - {-1}
-    n_clusters = len(unique_labels)
+    # 3) Save labels
+    np.save(OUTPUT_LABELS, labels)
+    print(f"Saved labels -> {OUTPUT_LABELS}")
 
-    if n_clusters > 0:
-        sizes = [np.sum(labels == c) for c in unique_labels]
-        avg_size = np.mean(sizes)
-        max_size = np.max(sizes)
-        min_size = np.min(sizes)
-    else:
-        sizes = []
-        avg_size = max_size = min_size = 0
+    # 4) Save full hierarchy (optional)
+    if model.hierarchy_ is not None and len(model.hierarchy_) > 0:
+        eps = np.array([h["eps"] for h in model.hierarchy_], dtype=float)
+        ncl_B = np.array([h["nclusters_level"] for h in model.hierarchy_], dtype=int)
+        ncl_C = np.array([h["nclusters_hierarchy"] for h in model.hierarchy_], dtype=int)
 
-    stats_msg = f"""
-    ========================================
-    LSH-HDBSCAN RESULTS SUMMARY
-    ========================================
-    Total Points:     {n_points}
-    Noise Points:     {n_noise} ({noise_ratio:.2%})
-    Valid Clusters:   {n_clusters}
+        # Attenzione: (L, n) può diventare grande se L è grande.
+        labels_stack = np.stack([h["labels"] for h in model.hierarchy_], axis=0).astype(np.int32)
 
-    Cluster Sizes:
-      - Average:      {avg_size:.1f}
-      - Max (Giant?): {max_size}
-      - Min:          {min_size}
-    ========================================
-    """
-    print(stats_msg)
+        np.savez_compressed(
+            OUTPUT_HIERARCHY,
+            eps=eps,
+            nclusters_level=ncl_B,
+            nclusters_hierarchy=ncl_C,
+            labels_by_level=labels_stack,
+            delta_hat=np.array(model.delta_hat_, dtype=float),
+            dmax_hat=np.array(model.dmax_hat_, dtype=float),
+            dmin_hat=np.array(model.dmin_hat_, dtype=float),
+        )
+        print(f"Saved hierarchy -> {OUTPUT_HIERARCHY}")
 
-    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-    np.save(OUTPUT_FILE, labels)
-    print(f"--> Labels saved to: {OUTPUT_FILE}")
+    # 5) Report
+    uniq = np.unique(labels)
+    k = int(np.sum(uniq != -1))  # cluster ids excluding noise
+    print(f"Done in {(t1 - t0):.2f}s | clusters(excl. noise)={k}")
 
-    with open(OUTPUT_STATS, "w") as f:
-        f.write(stats_msg)
+    if model.delta_hat_ is not None:
+        print(
+            f"Delta_hat={model.delta_hat_:.6g}, "
+            f"Dmax_hat={model.dmax_hat_:.6g}, "
+            f"dmin_hat={model.dmin_hat_:.6g}"
+        )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,167 @@
+
+================================================================================
+ANALISI MAXICLUSTER DBSCAN
+================================================================================
+
+Data analisi: 2026-01-29 12:29:04
+
+CONFIGURAZIONE CLUSTERING:
+  - Algoritmo: IP-LSH-DBSCAN
+  - eps: 0.31
+  - minPts: 30
+  - L (hash tables): 10
+  - M (hash functions): 18
+  - threads: 32
+
+FILE ANALIZZATI:
+  - Labels: data/experiments/iplsh_results/best/labels_eps0.31_mpts30_L10_M18_t32.idx_concurrentlshdbscan
+  - Embeddings: data/embeddings/embeddings_v1_384.npy
+  
+DIMENSIONI DATI:
+  - Labels shape: (52002,)
+  - Embeddings shape: (52002, 384)
+
+OUTPUT SALVATO IN: data/experiments/analysis_results
+
+================================================================================
+
+
+================================================================================
+SEZIONE 1: STATISTICHE CLUSTERING
+================================================================================
+
+Punti totali: 52,002
+Cluster trovati: 232
+Noise: 7,587 (14.59%)
+
+--- MAXICLUSTER ---
+ID: 52001
+Size: 40,508 (77.90%)
+
+Top 10 cluster sizes:
+   1. 40,508 punti (77.90%)
+   2.   148 punti ( 0.28%)
+   3.   147 punti ( 0.28%)
+   4.   134 punti ( 0.26%)
+   5.   127 punti ( 0.24%)
+   6.   125 punti ( 0.24%)
+   7.   106 punti ( 0.20%)
+   8.   104 punti ( 0.20%)
+   9.    96 punti ( 0.18%)
+  10.    79 punti ( 0.15%)
+
+Mediana dimensione cluster: 9
+Media (escluso maxicluster): 16.9
+
+================================================================================
+SEZIONE 2: ANALISI SILHOUETTE (coesione cluster)
+================================================================================
+
+Silhouette globale (sample 10000, no noise): -0.256
+
+--- MAXICLUSTER (n=40,508) ---
+Silhouette medio maxicluster (vs altri cluster): -0.201
+  Min: -0.930
+  25%: -0.239
+  50%: -0.184
+  75%: -0.145
+  Max: -0.057
+  % punti con Silhouette < 0: 100.0%
+    → 100.0% punti più vicini ad altri cluster che al proprio
+
+--- Confronto Silhouette: Top 5 cluster (vs resto dataset) ---
+  ★ Cluster 52001: size=40,508, silhouette=-0.202
+    Cluster 51367: size=   148, silhouette=-0.239
+    Cluster 51416: size=   147, silhouette=-0.262
+    Cluster 51908: size=   134, silhouette=-0.286
+    Cluster 51619: size=   127, silhouette=-0.254
+
+================================================================================
+SEZIONE 3: ANALISI DISTANZE INTRA-CLUSTER (compattezza)
+================================================================================
+
+--- MAXICLUSTER: distanze dal centroide (cosine) ---
+Media: 0.6144
+Std:   0.1308
+Min:   0.2560
+Max:   1.0803
+Coeff. Variazione: 0.213
+
+--- Confronto: Top 5 cluster ---
+  ★ Cluster 52001: mean=0.6180, std=0.1304, CV=0.211
+    Cluster 51367: mean=0.6094, std=0.1144, CV=0.188
+    Cluster 51416: mean=0.6074, std=0.1204, CV=0.198
+    Cluster 51908: mean=0.5618, std=0.1310, CV=0.233
+    Cluster 51619: mean=0.5964, std=0.1052, CV=0.176
+
+Interpretazione (Coefficient of Variation):
+  CV < 0.5: cluster compatto
+  CV 0.5-1.0: compattezza media
+  CV > 1.0: cluster sparso/eterogeneo
+
+→ Maxicluster ha CV=0.213: cluster COMPATTO
+  Probabilmente semanticamente coerente
+
+================================================================================
+SEZIONE 4: INTERPRETAZIONE E RACCOMANDAZIONI
+================================================================================
+
+DIAGNOSI:
+  ⚠️  PROBLEMA CRITICO: Silhouette fortemente negativo
+      → Over-merging: DBSCAN ha fuso cluster che dovrebbero essere separati
+      → I punti del maxicluster sono più vicini ad altri cluster
+  ✓  CV basso: cluster compatto internamente
+      → Ma combinato con Silhouette negativo indica 'giant component'
+      → Cluster omogeneo che ha assorbito sottocluster semanticamente diversi
+
+RACCOMANDAZIONI:
+  1. DBSCAN ricorsivo sul maxicluster:
+     - Ridurre eps (provare: 0.15, 0.18, 0.20, 0.22, 0.25)
+     - Aumentare minPts (provare: 40, 50, 60, 80)
+     - Obiettivo: Silhouette > 0.2, 50-150 sub-cluster
+
+  2. Considerare HDBSCAN per gestire densità variabile
+
+  3. Confrontare prestazioni downstream:
+     - K-Means (baseline CaR)
+     - DBSCAN + ricorsivo
+     - HDBSCAN
+
+  4. Validare con k-dist plot per verificare se eps=0.31 è appropriato
+
+================================================================================
+SUMMARY REPORT
+================================================================================
+
+
+CONFIG: eps=0.31, minPts=30, L=10, M=18
+
+1. STRUTTURA CLUSTERING
+   - Cluster totali: 232
+   - Noise: 7,587 (14.6%)
+   - Maxicluster: 40,508 (77.9%)
+   - Mediana size altri cluster: 9
+
+2. COESIONE MAXICLUSTER
+   - Silhouette globale: -0.256
+   - Silhouette maxicluster: -0.201
+   - % punti Silhouette < 0: 100.0%
+   - Coefficient of Variation: 0.213
+   - Interpretazione: OVER-MERGING CRITICO
+
+3. CONFRONTO CON CaR
+   - CaR usa K-Means con k ≈ 178 cluster
+   - DBSCAN attuale: 232 cluster (comparabile)
+   - Ma distribuzione sbilanciata: 77.9% in un cluster
+   
+4. AZIONI PRIORITARIE
+   ✓ CRITICO: DBSCAN ricorsivo necessario (Silhouette negativo)
+   ✓ Analizzare task distribution nel maxicluster
+   ✓ Confrontare con HDBSCAN
+   ✓ Validare con k-dist plot
+
+
+================================================================================
+Analisi completata: 2026-01-29 12:29:06
+Report salvato in: data/experiments/analysis_results/maxicluster_analysis_20260129_122904.txt
+================================================================================

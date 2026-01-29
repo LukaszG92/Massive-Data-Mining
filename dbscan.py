@@ -14,7 +14,7 @@ from sklearn.metrics import (
 )
 
 # ---- Config (dalla run scelta) ----
-INPUT_NPY = "data/embeddings/embeddings_v1_384.npy"  # [file:18]
+INPUT_NPY = "data/embeddings/all-MiniLM-L6-v2_mean_centered.npy"  # [file:18]
 p_miss   = 0.01                                     # delta [file:18]
 L_gb     = 3.0                                      # [file:18]
 threads  = 24                                       # [file:18]
@@ -35,7 +35,7 @@ stats = srr.statistics()
 (OUTDIR / "srr_statistics.json").write_text(
     json.dumps(stats, indent=2) if isinstance(stats, (dict, list)) else json.dumps({"statistics": str(stats)}, indent=2)
 )
-np.save(OUTDIR / "labels_10mpts_0.85eps.npy", labels_srr)
+np.save(OUTDIR / "right_labels_10mpts_0.85eps.npy", labels_srr)
 
 # metadata base
 meta = {

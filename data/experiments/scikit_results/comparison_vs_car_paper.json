@@ -1,0 +1,37 @@
+{
+  "method": {
+    "hdbscan": {
+      "embeddings": "instructor-large-768D",
+      "reduction": "UMAP (768D\u219250D, cosine)",
+      "clustering": "HDBSCAN (min_cluster_size=150)",
+      "n_clusters": 99,
+      "noise_ratio": 0.2198184685204415
+    },
+    "kmeans_car": {
+      "embeddings": "all-MiniLM-L6-384D",
+      "reduction": "PCA 95% var (384D\u2192243D)",
+      "clustering": "K-Means (k=\u221a(n/2)=161)",
+      "n_clusters": 161,
+      "noise_ratio": 0.0
+    }
+  },
+  "metrics": {
+    "hdbscan": {
+      "silhouette": 0.5587038993835449,
+      "davies_bouldin": 0.584857184652527,
+      "calinski_harabasz": 32398.57113618469,
+      "iqs_cv": 0.57594475183364
+    },
+    "kmeans_car": {
+      "silhouette": 0.038408324122428894,
+      "davies_bouldin": 3.4303808356532275,
+      "calinski_harabasz": 141.76361320925957,
+      "iqs_cv": 0.5755663019637904
+    }
+  },
+  "improvements": {
+    "silhouette_pct": 1354.642742554041,
+    "davies_bouldin_pct": 486.53307605193766,
+    "calinski_harabasz_pct": 22753.940022226037
+  }
+}
