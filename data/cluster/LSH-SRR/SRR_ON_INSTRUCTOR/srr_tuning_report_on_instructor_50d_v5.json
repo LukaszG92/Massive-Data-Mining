@@ -1,0 +1,1563 @@
+{
+  "meta": {
+    "created_at_unix": 1769776383,
+    "input_npy": "data/embeddings/instructor_umap_50d.npy",
+    "shape": {
+      "n": 52002,
+      "d": 50
+    },
+    "kdist_metric": "euclidean",
+    "deltas": [
+      0.01
+    ],
+    "L_gbs": [
+      4.0
+    ],
+    "threads": 24,
+    "minPts_values": [
+      10,
+      12,
+      15,
+      25
+    ],
+    "eps_quantiles": [
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9
+    ],
+    "eps_jitter": 0.02,
+    "max_eps_per_minpts": 10,
+    "kdist_sample_size": null,
+    "silhouette_sample_size": 10000
+  },
+  "kdist": {
+    "10": {
+      "k": 10,
+      "metric": "euclidean",
+      "kth_summary": {
+        "mean": 0.08550542839484206,
+        "std": 0.08349257324749762,
+        "min": 0.00024139313609339297,
+        "max": 1.615760087966919
+      },
+      "quantiles": {
+        "q70": 0.09818075522780419,
+        "q75": 0.11264457367360592,
+        "q80": 0.13012690246105196,
+        "q85": 0.15195800289511677,
+        "q90": 0.18507156968116764
+      },
+      "eps_candidates": [
+        0.09818075522780419,
+        0.11264457367360592,
+        0.13012690246105196,
+        0.15195800289511677,
+        0.18507156968116764
+      ]
+    },
+    "12": {
+      "k": 12,
+      "metric": "euclidean",
+      "kth_summary": {
+        "mean": 0.09239738061419171,
+        "std": 0.08986180400855073,
+        "min": 0.00030563477776013315,
+        "max": 1.6268244981765747
+      },
+      "quantiles": {
+        "q70": 0.10598906651139256,
+        "q75": 0.12068973295390606,
+        "q80": 0.13980069458484656,
+        "q85": 0.16308228000998493,
+        "q90": 0.19757302999496462
+      },
+      "eps_candidates": [
+        0.10598906651139256,
+        0.12068973295390606,
+        0.13980069458484656,
+        0.16308228000998493,
+        0.19757302999496462
+      ]
+    },
+    "15": {
+      "k": 15,
+      "metric": "euclidean",
+      "kth_summary": {
+        "mean": 0.10141762110033663,
+        "std": 0.09624735424864336,
+        "min": 0.0004244367592036724,
+        "max": 1.6348658800125122
+      },
+      "quantiles": {
+        "q70": 0.11652707383036609,
+        "q75": 0.132397823035717,
+        "q80": 0.15184418559074406,
+        "q85": 0.17758848890662193,
+        "q90": 0.21480775475502023
+      },
+      "eps_candidates": [
+        0.11652707383036609,
+        0.132397823035717,
+        0.15184418559074406,
+        0.17758848890662193,
+        0.21480775475502023
+      ]
+    },
+    "25": {
+      "k": 25,
+      "metric": "euclidean",
+      "kth_summary": {
+        "mean": 0.13321349220946857,
+        "std": 0.1735129011229083,
+        "min": 0.0007200866239145398,
+        "max": 5.007596492767334
+      },
+      "quantiles": {
+        "q70": 0.15021574050188063,
+        "q75": 0.16894133761525154,
+        "q80": 0.192742195725441,
+        "q85": 0.22298714891076088,
+        "q90": 0.266001370549202
+      },
+      "eps_candidates": [
+        0.15021574050188063,
+        0.16894133761525154,
+        0.192742195725441,
+        0.22298714891076088,
+        0.266001370549202
+      ]
+    }
+  },
+  "runs": [
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.09818075522780419,
+      "minPts": 10,
+      "runtime_s": 0.474088191986084,
+      "metrics_computation_s": 0.0025510787963867188,
+      "summary": {
+        "n_clusters": 541,
+        "noise": 13142,
+        "noise_frac": 0.25272104919041577,
+        "max_cluster_share": 0.029518095457867006,
+        "median_cluster_size": 23.0,
+        "p90_cluster_size": 185.0,
+        "p99_cluster_size": 697.6000000000001
+      },
+      "statistics": {
+        "timing_total": 0.308575903,
+        "timing_merging": 0.013292958,
+        "level_merge": 6.0,
+        "merge_level_4": 1514750.0,
+        "merge_level_3": 1468367.0,
+        "merge_level_2": 4454986.0,
+        "timing_build ht": 0.098686857,
+        "level_0": 1352078002.0,
+        "timing_identify bp": 2.591e-06,
+        "level_1": 623279917.0,
+        "level_3": 19436633.0,
+        "level_5": 17913132.0,
+        "level_6": 13893207.0,
+        "merge_level_1": 27164813.0,
+        "merge_level_6": 756145.0,
+        "level_2": 46667647.0,
+        "level_4": 17830189.0,
+        "timing_identify cp": 0.096500729,
+        "level_cp": 6.0,
+        "merge_level_5": 933837.0,
+        "merge_level_0": 770732692.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.0962171401232481,
+        "eps_plus": 0.10014437033236027,
+        "runtime_s_minus": 0.43177103996276855,
+        "runtime_s_plus": 0.4216029644012451,
+        "minus": {
+          "stability_ari": 0.9616268047311132,
+          "stability_nmi": 0.9833441593197657
+        },
+        "plus": {
+          "stability_ari": 0.9621685283600592,
+          "stability_nmi": 0.9837834661663485
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.11264457367360592,
+      "minPts": 10,
+      "runtime_s": 0.3944258689880371,
+      "metrics_computation_s": 0.003329038619995117,
+      "summary": {
+        "n_clusters": 481,
+        "noise": 10824,
+        "noise_frac": 0.20814584054459445,
+        "max_cluster_share": 0.03284489058113149,
+        "median_cluster_size": 25.0,
+        "p90_cluster_size": 208.0,
+        "p99_cluster_size": 972.5999999999972
+      },
+      "statistics": {
+        "timing_total": 0.236075716,
+        "timing_merging": 0.012718626,
+        "level_merge": 6.0,
+        "merge_level_4": 1871610.0,
+        "merge_level_3": 2360979.0,
+        "merge_level_2": 6224610.0,
+        "timing_build ht": 0.045411861,
+        "level_0": 1352078002.0,
+        "timing_identify bp": 2.779e-06,
+        "level_1": 705404023.0,
+        "level_3": 23810415.0,
+        "level_5": 22027617.0,
+        "level_6": 16906721.0,
+        "merge_level_1": 34662727.0,
+        "merge_level_6": 955189.0,
+        "level_2": 57632289.0,
+        "level_4": 21293549.0,
+        "timing_identify cp": 0.086819414,
+        "level_cp": 6.0,
+        "merge_level_5": 1113158.0,
+        "merge_level_0": 859984129.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.1103916822001338,
+        "eps_plus": 0.11489746514707803,
+        "runtime_s_minus": 0.3991374969482422,
+        "runtime_s_plus": 0.39412856101989746,
+        "minus": {
+          "stability_ari": 0.9606880392880779,
+          "stability_nmi": 0.9850384464593658
+        },
+        "plus": {
+          "stability_ari": 0.9583417832325963,
+          "stability_nmi": 0.9832739230193568
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.13012690246105196,
+      "minPts": 10,
+      "runtime_s": 0.3711519241333008,
+      "metrics_computation_s": 0.0032646656036376953,
+      "summary": {
+        "n_clusters": 395,
+        "noise": 8530,
+        "noise_frac": 0.164032152609515,
+        "max_cluster_share": 0.04351755701703781,
+        "median_cluster_size": 29.0,
+        "p90_cluster_size": 274.0000000000001,
+        "p99_cluster_size": 1401.2400000000002
+      },
+      "statistics": {
+        "timing_total": 0.215081986,
+        "timing_merging": 0.012978848,
+        "level_merge": 6.0,
+        "merge_level_4": 2693800.0,
+        "merge_level_3": 3187331.0,
+        "merge_level_2": 8682984.0,
+        "timing_build ht": 0.043414893,
+        "level_0": 1352078002.0,
+        "timing_identify bp": 2.624e-06,
+        "level_1": 814859989.0,
+        "level_3": 29346930.0,
+        "level_5": 26850712.0,
+        "level_6": 20633631.0,
+        "merge_level_1": 44690708.0,
+        "merge_level_6": 1161800.0,
+        "level_2": 72036322.0,
+        "level_4": 26506321.0,
+        "timing_identify cp": 0.076192579,
+        "level_cp": 6.0,
+        "merge_level_5": 1494127.0,
+        "merge_level_0": 952726727.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.12752436441183093,
+        "eps_plus": 0.132729440510273,
+        "runtime_s_minus": 0.3814113140106201,
+        "runtime_s_plus": 0.374805212020874,
+        "minus": {
+          "stability_ari": 0.9517903636296964,
+          "stability_nmi": 0.9842246834515692
+        },
+        "plus": {
+          "stability_ari": 0.9601699363184271,
+          "stability_nmi": 0.9853201108509747
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.15195800289511677,
+      "minPts": 10,
+      "runtime_s": 0.7989428043365479,
+      "metrics_computation_s": 0.0021305084228515625,
+      "summary": {
+        "n_clusters": 318,
+        "noise": 6406,
+        "noise_frac": 0.12318756970885736,
+        "max_cluster_share": 0.08634283296796277,
+        "median_cluster_size": 32.5,
+        "p90_cluster_size": 314.9000000000005,
+        "p99_cluster_size": 1763.5299999999986
+      },
+      "statistics": {
+        "merge_level_7": 859660.0,
+        "merge_level_9": 1246784.0,
+        "timing_total": 0.598542422,
+        "timing_merging": 0.018884784,
+        "level_merge": 7.0,
+        "level_9": 25836400.0,
+        "merge_level_4": 2686158.0,
+        "merge_level_3": 3322236.0,
+        "merge_level_2": 8542997.0,
+        "timing_build ht": 0.159968848,
+        "level_8": 25965141.0,
+        "level_7": 25943858.0,
+        "level_0": 1352078002.0,
+        "timing_identify bp": 2.412e-06,
+        "level_1": 870121766.0,
+        "level_3": 37245727.0,
+        "level_5": 33484187.0,
+        "level_6": 25765945.0,
+        "merge_level_1": 80983922.0,
+        "merge_level_8": 1256831.0,
+        "merge_level_6": 1597381.0,
+        "level_2": 92682501.0,
+        "level_4": 34172362.0,
+        "timing_identify cp": 0.180908988,
+        "level_cp": 6.0,
+        "merge_level_5": 1739704.0,
+        "merge_level_0": 1044450661.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.14891884283721443,
+        "eps_plus": 0.1549971629530191,
+        "runtime_s_minus": 0.7854876518249512,
+        "runtime_s_plus": 0.7652239799499512,
+        "minus": {
+          "stability_ari": 0.9740316744220827,
+          "stability_nmi": 0.9904051478041085
+        },
+        "plus": {
+          "stability_ari": 0.9729620009696136,
+          "stability_nmi": 0.9886666987952858
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.18507156968116764,
+      "minPts": 10,
+      "runtime_s": 0.7199578285217285,
+      "metrics_computation_s": 0.0023648738861083984,
+      "summary": {
+        "n_clusters": 230,
+        "noise": 4142,
+        "noise_frac": 0.0796507826622053,
+        "max_cluster_share": 0.1208030460366909,
+        "median_cluster_size": 37.0,
+        "p90_cluster_size": 445.0999999999999,
+        "p99_cluster_size": 2100.050000000001
+      },
+      "statistics": {
+        "merge_level_7": 1233965.0,
+        "merge_level_9": 1863787.0,
+        "timing_total": 0.523548661,
+        "timing_merging": 0.020255361,
+        "level_merge": 7.0,
+        "level_9": 34930185.0,
+        "merge_level_4": 3927049.0,
+        "merge_level_3": 4591306.0,
+        "merge_level_2": 12386679.0,
+        "timing_build ht": 0.115424199,
+        "level_8": 34506646.0,
+        "level_7": 34878741.0,
+        "level_0": 1352078002.0,
+        "timing_identify bp": 2.508e-06,
+        "level_1": 1046936576.0,
+        "level_3": 50806800.0,
+        "level_5": 43496065.0,
+        "level_6": 33984272.0,
+        "merge_level_1": 109500381.0,
+        "merge_level_8": 1940916.0,
+        "merge_level_6": 2083266.0,
+        "level_2": 126095364.0,
+        "level_4": 47821839.0,
+        "timing_identify cp": 0.166777964,
+        "level_cp": 6.0,
+        "merge_level_5": 2426044.0,
+        "merge_level_0": 1148043404.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.18137013828754428,
+        "eps_plus": 0.188773001074791,
+        "runtime_s_minus": 0.7115383148193359,
+        "runtime_s_plus": 1.229602575302124,
+        "minus": {
+          "stability_ari": 0.9709395849921606,
+          "stability_nmi": 0.9866657099877129
+        },
+        "plus": {
+          "stability_ari": 0.9714226604456064,
+          "stability_nmi": 0.9836516655328487
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.10598906651139256,
+      "minPts": 12,
+      "runtime_s": 0.40241193771362305,
+      "metrics_computation_s": 0.0028095245361328125,
+      "summary": {
+        "n_clusters": 511,
+        "noise": 13228,
+        "noise_frac": 0.2543748317372409,
+        "max_cluster_share": 0.029998846198223145,
+        "median_cluster_size": 25.0,
+        "p90_cluster_size": 188.0,
+        "p99_cluster_size": 706.9
+      },
+      "statistics": {
+        "merge_level_11": 2405419.0,
+        "merge_level_10": 2438166.0,
+        "merge_level_5": 1050400.0,
+        "timing_identify cp": 0.09261944,
+        "level_4": 19664227.0,
+        "merge_level_6": 844902.0,
+        "merge_level_8": 1598164.0,
+        "merge_level_1": 28803326.0,
+        "level_2": 52090713.0,
+        "level_6": 15542409.0,
+        "level_3": 21907963.0,
+        "level_1": 671781298.0,
+        "merge_level_0": 764463652.0,
+        "level_11": 36142899.0,
+        "timing_identify bp": 3.062e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 6.0,
+        "level_8": 35825925.0,
+        "timing_build ht": 0.046656756,
+        "merge_level_2": 5036324.0,
+        "merge_level_3": 1939984.0,
+        "level_10": 35849650.0,
+        "merge_level_4": 1599795.0,
+        "level_9": 37020262.0,
+        "level_merge": 6.0,
+        "timing_merging": 0.013090717,
+        "timing_total": 0.245166976,
+        "level_7": 36098678.0,
+        "merge_level_9": 1761089.0,
+        "level_5": 20260192.0,
+        "merge_level_7": 1563885.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.10386928518116471,
+        "eps_plus": 0.1081088478416204,
+        "runtime_s_minus": 0.4034714698791504,
+        "runtime_s_plus": 0.4016096591949463,
+        "minus": {
+          "stability_ari": 0.9655162844601054,
+          "stability_nmi": 0.9855948466915643
+        },
+        "plus": {
+          "stability_ari": 0.9658533378794503,
+          "stability_nmi": 0.9857299303989492
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.12068973295390606,
+      "minPts": 12,
+      "runtime_s": 0.3826901912689209,
+      "metrics_computation_s": 0.002805471420288086,
+      "summary": {
+        "n_clusters": 448,
+        "noise": 11060,
+        "noise_frac": 0.2126841275335564,
+        "max_cluster_share": 0.03284489058113149,
+        "median_cluster_size": 28.0,
+        "p90_cluster_size": 220.0,
+        "p99_cluster_size": 1025.399999999995
+      },
+      "statistics": {
+        "merge_level_11": 2405419.0,
+        "merge_level_10": 2438166.0,
+        "merge_level_5": 1235788.0,
+        "timing_identify cp": 0.083345509,
+        "level_4": 23535257.0,
+        "merge_level_6": 1040328.0,
+        "merge_level_8": 1598164.0,
+        "merge_level_1": 36658371.0,
+        "level_2": 64432113.0,
+        "level_6": 18409756.0,
+        "level_3": 25965671.0,
+        "level_1": 752058355.0,
+        "merge_level_0": 848493416.0,
+        "level_11": 36142899.0,
+        "timing_identify bp": 2.683e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 6.0,
+        "level_8": 35825925.0,
+        "timing_build ht": 0.045164333,
+        "merge_level_2": 6811508.0,
+        "merge_level_3": 2445555.0,
+        "level_10": 35849650.0,
+        "merge_level_4": 2134817.0,
+        "level_9": 37020262.0,
+        "level_merge": 6.0,
+        "timing_merging": 0.012310898,
+        "timing_total": 0.226347161,
+        "level_7": 36098678.0,
+        "merge_level_9": 1761089.0,
+        "level_5": 24119771.0,
+        "merge_level_7": 1563885.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.11827593829482794,
+        "eps_plus": 0.12310352761298418,
+        "runtime_s_minus": 0.3978555202484131,
+        "runtime_s_plus": 0.3861420154571533,
+        "minus": {
+          "stability_ari": 0.9585853672036524,
+          "stability_nmi": 0.9848738178541591
+        },
+        "plus": {
+          "stability_ari": 0.963362710857878,
+          "stability_nmi": 0.9864835943029202
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.13980069458484656,
+      "minPts": 12,
+      "runtime_s": 0.603428840637207,
+      "metrics_computation_s": 0.002912759780883789,
+      "summary": {
+        "n_clusters": 360,
+        "noise": 8675,
+        "noise_frac": 0.16682050690358063,
+        "max_cluster_share": 0.0439790777277797,
+        "median_cluster_size": 34.0,
+        "p90_cluster_size": 288.60000000000014,
+        "p99_cluster_size": 1420.1600000000044
+      },
+      "statistics": {
+        "merge_level_11": 2405419.0,
+        "merge_level_10": 2438166.0,
+        "merge_level_5": 1819589.0,
+        "timing_identify cp": 0.141970883,
+        "level_4": 30232682.0,
+        "merge_level_6": 1141069.0,
+        "merge_level_8": 1176032.0,
+        "merge_level_1": 45602122.0,
+        "level_2": 98810201.0,
+        "level_6": 22406378.0,
+        "level_3": 31225096.0,
+        "level_1": 640282298.0,
+        "merge_level_0": 946451279.0,
+        "level_11": 36142899.0,
+        "timing_identify bp": 3.297e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 6.0,
+        "level_8": 23058539.0,
+        "timing_build ht": 0.088158294,
+        "merge_level_2": 6825663.0,
+        "merge_level_3": 2355236.0,
+        "level_10": 35849650.0,
+        "merge_level_4": 1731137.0,
+        "level_9": 37020262.0,
+        "level_merge": 6.0,
+        "timing_merging": 0.017056347,
+        "timing_total": 0.418234597,
+        "level_7": 22433990.0,
+        "merge_level_9": 1761089.0,
+        "level_5": 29405289.0,
+        "merge_level_7": 1295847.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.13700468069314964,
+        "eps_plus": 0.1425967084765435,
+        "runtime_s_minus": 0.3724353313446045,
+        "runtime_s_plus": 0.7901594638824463,
+        "minus": {
+          "stability_ari": 0.9510651230452887,
+          "stability_nmi": 0.9836966463415314
+        },
+        "plus": {
+          "stability_ari": 0.9248847843019349,
+          "stability_nmi": 0.9785456224037906
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.16308228000998493,
+      "minPts": 12,
+      "runtime_s": 0.7476809024810791,
+      "metrics_computation_s": 0.004739522933959961,
+      "summary": {
+        "n_clusters": 286,
+        "noise": 6508,
+        "noise_frac": 0.1251490327295104,
+        "max_cluster_share": 0.0853044113687935,
+        "median_cluster_size": 38.0,
+        "p90_cluster_size": 389.0,
+        "p99_cluster_size": 1978.7499999999973
+      },
+      "statistics": {
+        "merge_level_11": 2405419.0,
+        "merge_level_10": 2438166.0,
+        "merge_level_5": 1933480.0,
+        "timing_identify cp": 0.179738618,
+        "level_4": 38380067.0,
+        "merge_level_6": 1661754.0,
+        "merge_level_8": 1566931.0,
+        "merge_level_1": 86211809.0,
+        "level_2": 104087134.0,
+        "level_6": 28713551.0,
+        "level_3": 42310941.0,
+        "level_1": 936245406.0,
+        "merge_level_0": 1039338029.0,
+        "level_11": 36142899.0,
+        "timing_identify bp": 2.929e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 6.0,
+        "level_8": 29423680.0,
+        "timing_build ht": 0.116626661,
+        "merge_level_2": 9449117.0,
+        "merge_level_3": 3772592.0,
+        "level_10": 35849650.0,
+        "merge_level_4": 2835594.0,
+        "level_9": 28731342.0,
+        "level_merge": 7.0,
+        "timing_merging": 0.018418287,
+        "timing_total": 0.545697076,
+        "level_7": 29638304.0,
+        "merge_level_9": 1420374.0,
+        "level_5": 35833414.0,
+        "merge_level_7": 1035806.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.15982063440978522,
+        "eps_plus": 0.16634392561018463,
+        "runtime_s_minus": 0.769763708114624,
+        "runtime_s_plus": 0.7410967350006104,
+        "minus": {
+          "stability_ari": 0.9695069242459928,
+          "stability_nmi": 0.9883686396241689
+        },
+        "plus": {
+          "stability_ari": 0.9362851759059369,
+          "stability_nmi": 0.9841116953019551
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.19757302999496462,
+      "minPts": 12,
+      "runtime_s": 1.1543524265289307,
+      "metrics_computation_s": 0.0027053356170654297,
+      "summary": {
+        "n_clusters": 204,
+        "noise": 4241,
+        "noise_frac": 0.08155455559401562,
+        "max_cluster_share": 0.12511057267028192,
+        "median_cluster_size": 38.0,
+        "p90_cluster_size": 503.5000000000001,
+        "p99_cluster_size": 2672.359999999999
+      },
+      "statistics": {
+        "merge_level_11": 2352819.0,
+        "merge_level_10": 2509551.0,
+        "merge_level_5": 3428676.0,
+        "timing_identify cp": 0.259863426,
+        "level_4": 50337608.0,
+        "merge_level_6": 2375611.0,
+        "merge_level_8": 1601293.0,
+        "merge_level_1": 94361658.0,
+        "level_2": 154698556.0,
+        "level_6": 37939855.0,
+        "level_3": 64477869.0,
+        "level_1": 1066557082.0,
+        "merge_level_0": 1142539504.0,
+        "level_11": 37821526.0,
+        "timing_identify bp": 2.861e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 8.0,
+        "level_8": 37549456.0,
+        "timing_build ht": 0.212233765,
+        "merge_level_2": 12719293.0,
+        "merge_level_3": 3878739.0,
+        "level_10": 37656852.0,
+        "merge_level_4": 3356815.0,
+        "level_9": 37882888.0,
+        "level_merge": 8.0,
+        "timing_merging": 0.022321769,
+        "timing_total": 0.918233901,
+        "level_7": 37814350.0,
+        "merge_level_9": 1850897.0,
+        "level_5": 47010598.0,
+        "merge_level_7": 1732373.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.19362156939506533,
+        "eps_plus": 0.2015244905948639,
+        "runtime_s_minus": 1.1751506328582764,
+        "runtime_s_plus": 1.1411137580871582,
+        "minus": {
+          "stability_ari": 0.9521935877712568,
+          "stability_nmi": 0.9808359863167945
+        },
+        "plus": {
+          "stability_ari": 0.9245391274638102,
+          "stability_nmi": 0.9783826207509213
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.11652707383036609,
+      "minPts": 15,
+      "runtime_s": 0.388289213180542,
+      "metrics_computation_s": 0.0028655529022216797,
+      "summary": {
+        "n_clusters": 445,
+        "noise": 13407,
+        "noise_frac": 0.2578170070381908,
+        "max_cluster_share": 0.03117187800469213,
+        "median_cluster_size": 29.0,
+        "p90_cluster_size": 202.80000000000018,
+        "p99_cluster_size": 868.4400000000003
+      },
+      "statistics": {
+        "merge_level_11": 2573848.0,
+        "merge_level_10": 2256479.0,
+        "merge_level_5": 1121478.0,
+        "timing_identify cp": 0.088005386,
+        "level_4": 22628923.0,
+        "merge_level_6": 900448.0,
+        "merge_level_8": 1794607.0,
+        "merge_level_1": 31813644.0,
+        "level_2": 60882621.0,
+        "level_6": 17601914.0,
+        "level_3": 24947610.0,
+        "level_1": 736578488.0,
+        "merge_level_0": 756896779.0,
+        "level_11": 38812640.0,
+        "timing_identify bp": 2.861e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 6.0,
+        "level_8": 38778545.0,
+        "timing_build ht": 0.044971487,
+        "merge_level_2": 5809035.0,
+        "merge_level_3": 2115566.0,
+        "level_10": 39971977.0,
+        "merge_level_4": 1833297.0,
+        "level_9": 39855346.0,
+        "level_merge": 6.0,
+        "timing_merging": 0.012494886,
+        "timing_total": 0.231662518,
+        "level_7": 39838558.0,
+        "merge_level_9": 1859171.0,
+        "level_5": 22797306.0,
+        "merge_level_7": 1861114.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.11419653235375876,
+        "eps_plus": 0.11885761530697342,
+        "runtime_s_minus": 0.4006633758544922,
+        "runtime_s_plus": 0.4000542163848877,
+        "minus": {
+          "stability_ari": 0.9611716503477763,
+          "stability_nmi": 0.9828862195039807
+        },
+        "plus": {
+          "stability_ari": 0.9598675241645097,
+          "stability_nmi": 0.9820423839436481
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.132397823035717,
+      "minPts": 15,
+      "runtime_s": 0.3838202953338623,
+      "metrics_computation_s": 0.0028235912322998047,
+      "summary": {
+        "n_clusters": 411,
+        "noise": 11157,
+        "noise_frac": 0.21454944040613821,
+        "max_cluster_share": 0.033498711588015845,
+        "median_cluster_size": 32.0,
+        "p90_cluster_size": 256.0,
+        "p99_cluster_size": 1050.899999999997
+      },
+      "statistics": {
+        "merge_level_11": 2573848.0,
+        "merge_level_10": 2256479.0,
+        "merge_level_5": 1513064.0,
+        "timing_identify cp": 0.080283004,
+        "level_4": 27164234.0,
+        "merge_level_6": 1238366.0,
+        "merge_level_8": 1794607.0,
+        "merge_level_1": 39768523.0,
+        "level_2": 73943373.0,
+        "level_6": 20981205.0,
+        "level_3": 29665483.0,
+        "level_1": 825701728.0,
+        "merge_level_0": 843228712.0,
+        "level_11": 38812640.0,
+        "timing_identify bp": 2.429e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 6.0,
+        "level_8": 38778545.0,
+        "timing_build ht": 0.045143665,
+        "merge_level_2": 7735514.0,
+        "merge_level_3": 2925197.0,
+        "level_10": 39971977.0,
+        "merge_level_4": 2483222.0,
+        "level_9": 39855346.0,
+        "level_merge": 6.0,
+        "timing_merging": 0.012269022,
+        "timing_total": 0.221592364,
+        "level_7": 39838558.0,
+        "merge_level_9": 1859171.0,
+        "level_5": 27341854.0,
+        "merge_level_7": 1861114.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.12974986657500268,
+        "eps_plus": 0.13504577949643135,
+        "runtime_s_minus": 0.39055895805358887,
+        "runtime_s_plus": 0.4060192108154297,
+        "minus": {
+          "stability_ari": 0.9585207277266405,
+          "stability_nmi": 0.9843505954463873
+        },
+        "plus": {
+          "stability_ari": 0.9590753654439746,
+          "stability_nmi": 0.9830027426142177
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.15184418559074406,
+      "minPts": 15,
+      "runtime_s": 0.8411502838134766,
+      "metrics_computation_s": 0.0025730133056640625,
+      "summary": {
+        "n_clusters": 326,
+        "noise": 8921,
+        "noise_frac": 0.17155109418868505,
+        "max_cluster_share": 0.07167032037229337,
+        "median_cluster_size": 36.0,
+        "p90_cluster_size": 313.0,
+        "p99_cluster_size": 1524.0
+      },
+      "statistics": {
+        "merge_level_11": 2573848.0,
+        "merge_level_10": 2256479.0,
+        "merge_level_5": 1658369.0,
+        "timing_identify cp": 0.20626689,
+        "level_4": 33980915.0,
+        "merge_level_6": 1555461.0,
+        "merge_level_8": 1209392.0,
+        "merge_level_1": 72048528.0,
+        "level_2": 92408246.0,
+        "level_6": 25740197.0,
+        "level_3": 37217008.0,
+        "level_1": 869776995.0,
+        "merge_level_0": 934524529.0,
+        "level_11": 38812640.0,
+        "timing_identify bp": 2.39e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 6.0,
+        "level_8": 25870655.0,
+        "timing_build ht": 0.128610208,
+        "merge_level_2": 7652817.0,
+        "merge_level_3": 3097372.0,
+        "level_10": 39971977.0,
+        "merge_level_4": 2519353.0,
+        "level_9": 25901650.0,
+        "level_merge": 7.0,
+        "timing_merging": 0.019003764,
+        "timing_total": 0.614172132,
+        "level_7": 26003164.0,
+        "merge_level_9": 1206346.0,
+        "level_5": 33437617.0,
+        "merge_level_7": 835675.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.14880730187892918,
+        "eps_plus": 0.15488106930255893,
+        "runtime_s_minus": 0.8267886638641357,
+        "runtime_s_plus": 0.7791359424591064,
+        "minus": {
+          "stability_ari": 0.9628123538098743,
+          "stability_nmi": 0.9859672251945047
+        },
+        "plus": {
+          "stability_ari": 0.9635703870138345,
+          "stability_nmi": 0.9857073665003016
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.17758848890662193,
+      "minPts": 15,
+      "runtime_s": 0.7288393974304199,
+      "metrics_computation_s": 0.0027341842651367188,
+      "summary": {
+        "n_clusters": 251,
+        "noise": 6709,
+        "noise_frac": 0.12901426868197377,
+        "max_cluster_share": 0.0846698203915234,
+        "median_cluster_size": 43.0,
+        "p90_cluster_size": 428.0,
+        "p99_cluster_size": 2019.5
+      },
+      "statistics": {
+        "merge_level_11": 2573848.0,
+        "merge_level_10": 2256479.0,
+        "merge_level_5": 2140770.0,
+        "timing_identify cp": 0.170873193,
+        "level_4": 43278006.0,
+        "merge_level_6": 2014772.0,
+        "merge_level_8": 1677403.0,
+        "merge_level_1": 93606311.0,
+        "level_2": 119590199.0,
+        "level_6": 32010542.0,
+        "level_3": 47573446.0,
+        "level_1": 1019610101.0,
+        "merge_level_0": 1030330316.0,
+        "level_11": 38812640.0,
+        "timing_identify bp": 2.541e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 6.0,
+        "level_8": 32630095.0,
+        "timing_build ht": 0.110523871,
+        "merge_level_2": 10688649.0,
+        "merge_level_3": 4051105.0,
+        "level_10": 39971977.0,
+        "merge_level_4": 3032954.0,
+        "level_9": 32695670.0,
+        "level_merge": 7.0,
+        "timing_merging": 0.016934236,
+        "timing_total": 0.527343966,
+        "level_7": 32738886.0,
+        "merge_level_9": 1598480.0,
+        "level_5": 41421546.0,
+        "merge_level_7": 1162392.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.1740367191284895,
+        "eps_plus": 0.18114025868475436,
+        "runtime_s_minus": 0.7359912395477295,
+        "runtime_s_plus": 0.7165539264678955,
+        "minus": {
+          "stability_ari": 0.9663042562846978,
+          "stability_nmi": 0.9865292786231332
+        },
+        "plus": {
+          "stability_ari": 0.9579404844161227,
+          "stability_nmi": 0.9846271486984022
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.21480775475502023,
+      "minPts": 15,
+      "runtime_s": 1.4761955738067627,
+      "metrics_computation_s": 0.0027065277099609375,
+      "summary": {
+        "n_clusters": 176,
+        "noise": 4439,
+        "noise_frac": 0.08536210145763624,
+        "max_cluster_share": 0.12537979308488134,
+        "median_cluster_size": 47.5,
+        "p90_cluster_size": 506.0,
+        "p99_cluster_size": 4062.0
+      },
+      "statistics": {
+        "merge_level_12": 2594337.0,
+        "level_12": 41738475.0,
+        "merge_level_11": 2380464.0,
+        "merge_level_10": 2054794.0,
+        "merge_level_5": 3054764.0,
+        "timing_identify cp": 0.31663676,
+        "level_4": 58781508.0,
+        "merge_level_6": 2512365.0,
+        "merge_level_8": 1883546.0,
+        "merge_level_1": 88903591.0,
+        "level_2": 197817569.0,
+        "level_6": 42687841.0,
+        "level_3": 75331459.0,
+        "level_1": 1258807382.0,
+        "merge_level_0": 1133427467.0,
+        "level_11": 42009016.0,
+        "timing_identify bp": 2.788e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 8.0,
+        "level_8": 41701362.0,
+        "timing_build ht": 0.321033654,
+        "merge_level_2": 15218459.0,
+        "merge_level_3": 6421596.0,
+        "level_10": 42914664.0,
+        "merge_level_4": 5099202.0,
+        "level_9": 42360664.0,
+        "level_merge": 8.0,
+        "timing_merging": 0.026473008,
+        "timing_total": 1.214930137,
+        "level_7": 43461424.0,
+        "merge_level_9": 2119040.0,
+        "level_5": 53683560.0,
+        "merge_level_7": 2144594.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.21051159965991983,
+        "eps_plus": 0.21910390985012063,
+        "runtime_s_minus": 1.1288721561431885,
+        "runtime_s_plus": 1.421790361404419,
+        "minus": {
+          "stability_ari": 0.9576727878465329,
+          "stability_nmi": 0.9850597090601565
+        },
+        "plus": {
+          "stability_ari": 0.9483299670729869,
+          "stability_nmi": 0.9821805936910922
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.15021574050188063,
+      "minPts": 25,
+      "runtime_s": 0.7621378898620605,
+      "metrics_computation_s": 0.0015804767608642578,
+      "summary": {
+        "n_clusters": 353,
+        "noise": 13316,
+        "noise_frac": 0.2560670743432945,
+        "max_cluster_share": 0.032537210107303566,
+        "median_cluster_size": 36.0,
+        "p90_cluster_size": 279.6,
+        "p99_cluster_size": 1088.3600000000006
+      },
+      "statistics": {
+        "merge_level_12": 2804593.0,
+        "level_12": 43503152.0,
+        "merge_level_11": 2385191.0,
+        "merge_level_10": 2199989.0,
+        "merge_level_5": 1473846.0,
+        "timing_identify cp": 0.197941396,
+        "level_4": 34056514.0,
+        "merge_level_6": 1439183.0,
+        "merge_level_8": 1273457.0,
+        "merge_level_1": 57038775.0,
+        "level_2": 91716113.0,
+        "level_6": 25337576.0,
+        "level_3": 37720627.0,
+        "level_1": 861905891.0,
+        "merge_level_0": 756857872.0,
+        "level_11": 43159063.0,
+        "timing_identify bp": 2.905e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 6.0,
+        "level_8": 25693151.0,
+        "timing_build ht": 0.121149146,
+        "merge_level_2": 6130087.0,
+        "merge_level_3": 2931969.0,
+        "level_10": 43297399.0,
+        "merge_level_4": 2183910.0,
+        "level_9": 25407327.0,
+        "level_merge": 7.0,
+        "timing_merging": 0.016114903,
+        "timing_total": 0.559379489,
+        "level_7": 25343647.0,
+        "merge_level_9": 1167035.0,
+        "level_5": 32876792.0,
+        "merge_level_7": 843656.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.147211425691843,
+        "eps_plus": 0.15322005531191826,
+        "runtime_s_minus": 0.7686893939971924,
+        "runtime_s_plus": 0.7606370449066162,
+        "minus": {
+          "stability_ari": 0.9525929368848528,
+          "stability_nmi": 0.9761751788612535
+        },
+        "plus": {
+          "stability_ari": 0.9531949830523985,
+          "stability_nmi": 0.9788375819396943
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.16894133761525154,
+      "minPts": 25,
+      "runtime_s": 0.7289524078369141,
+      "metrics_computation_s": 0.0025217533111572266,
+      "summary": {
+        "n_clusters": 297,
+        "noise": 11211,
+        "noise_frac": 0.2155878620053075,
+        "max_cluster_share": 0.03982539133110265,
+        "median_cluster_size": 42.0,
+        "p90_cluster_size": 388.2000000000001,
+        "p99_cluster_size": 1381.6400000000012
+      },
+      "statistics": {
+        "merge_level_12": 2804593.0,
+        "level_12": 43503152.0,
+        "merge_level_11": 2385191.0,
+        "merge_level_10": 2199989.0,
+        "merge_level_5": 1842213.0,
+        "timing_identify cp": 0.179048269,
+        "level_4": 40952959.0,
+        "merge_level_6": 1621917.0,
+        "merge_level_8": 1384161.0,
+        "merge_level_1": 70974133.0,
+        "level_2": 109154718.0,
+        "level_6": 29481609.0,
+        "level_3": 43606077.0,
+        "level_1": 969240960.0,
+        "merge_level_0": 838471726.0,
+        "level_11": 43159063.0,
+        "timing_identify bp": 3.149e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 6.0,
+        "level_8": 30203697.0,
+        "timing_build ht": 0.112804113,
+        "merge_level_2": 8220020.0,
+        "merge_level_3": 3331877.0,
+        "level_10": 43297399.0,
+        "merge_level_4": 2837007.0,
+        "level_9": 29960824.0,
+        "level_merge": 7.0,
+        "timing_merging": 0.016401445,
+        "timing_total": 0.52410452,
+        "level_7": 29701505.0,
+        "merge_level_9": 1347513.0,
+        "level_5": 38333254.0,
+        "merge_level_7": 1094481.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.16556251086294652,
+        "eps_plus": 0.17232016436755657,
+        "runtime_s_minus": 0.7372217178344727,
+        "runtime_s_plus": 0.7152986526489258,
+        "minus": {
+          "stability_ari": 0.9546819483847885,
+          "stability_nmi": 0.9799057520411242
+        },
+        "plus": {
+          "stability_ari": 0.9556079215067024,
+          "stability_nmi": 0.9804693857274006
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.192742195725441,
+      "minPts": 25,
+      "runtime_s": 1.1705784797668457,
+      "metrics_computation_s": 0.0044689178466796875,
+      "summary": {
+        "n_clusters": 237,
+        "noise": 9010,
+        "noise_frac": 0.1732625668243529,
+        "max_cluster_share": 0.06749740394600208,
+        "median_cluster_size": 52.0,
+        "p90_cluster_size": 444.6,
+        "p99_cluster_size": 1842.6399999999967
+      },
+      "statistics": {
+        "merge_level_12": 2804593.0,
+        "level_12": 43503152.0,
+        "merge_level_11": 2208665.0,
+        "merge_level_10": 2189115.0,
+        "merge_level_5": 2779299.0,
+        "timing_identify cp": 0.278873972,
+        "level_4": 48291773.0,
+        "merge_level_6": 2074123.0,
+        "merge_level_8": 1511532.0,
+        "merge_level_1": 72868619.0,
+        "level_2": 150625886.0,
+        "level_6": 36450363.0,
+        "level_3": 60858157.0,
+        "level_1": 1041254326.0,
+        "merge_level_0": 928826551.0,
+        "level_11": 36651916.0,
+        "timing_identify bp": 3.781e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 6.0,
+        "level_8": 36665641.0,
+        "timing_build ht": 0.223153258,
+        "merge_level_2": 9598917.0,
+        "merge_level_3": 3317225.0,
+        "level_10": 37167681.0,
+        "merge_level_4": 2695844.0,
+        "level_9": 37691576.0,
+        "level_merge": 7.0,
+        "timing_merging": 0.019202485,
+        "timing_total": 0.932005873,
+        "level_7": 37309492.0,
+        "merge_level_9": 1747750.0,
+        "level_5": 45374303.0,
+        "merge_level_7": 1498446.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.18888735181093216,
+        "eps_plus": 0.19659703963994982,
+        "runtime_s_minus": 1.167693853378296,
+        "runtime_s_plus": 1.1567409038543701,
+        "minus": {
+          "stability_ari": 0.9603087537725867,
+          "stability_nmi": 0.9841705728517758
+        },
+        "plus": {
+          "stability_ari": 0.9174747662218367,
+          "stability_nmi": 0.9721075913548715
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.22298714891076088,
+      "minPts": 25,
+      "runtime_s": 1.3863205909729004,
+      "metrics_computation_s": 0.0032753944396972656,
+      "summary": {
+        "n_clusters": 174,
+        "noise": 6767,
+        "noise_frac": 0.13012961039960003,
+        "max_cluster_share": 0.10895734779431561,
+        "median_cluster_size": 66.5,
+        "p90_cluster_size": 509.70000000000005,
+        "p99_cluster_size": 2674.2800000000007
+      },
+      "statistics": {
+        "merge_level_12": 2888856.0,
+        "level_12": 45448540.0,
+        "merge_level_11": 2386421.0,
+        "merge_level_10": 2219686.0,
+        "merge_level_5": 2959168.0,
+        "timing_identify cp": 0.312114602,
+        "level_4": 62020682.0,
+        "merge_level_6": 2785005.0,
+        "merge_level_8": 1933095.0,
+        "merge_level_1": 83037949.0,
+        "level_2": 208427980.0,
+        "level_6": 44899932.0,
+        "level_3": 82322661.0,
+        "level_1": 1315838293.0,
+        "merge_level_0": 1026566017.0,
+        "level_11": 45340213.0,
+        "timing_identify bp": 2.882e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 8.0,
+        "level_8": 44586003.0,
+        "timing_build ht": 0.284817057,
+        "merge_level_2": 14933011.0,
+        "merge_level_3": 5625787.0,
+        "level_10": 44703808.0,
+        "merge_level_4": 4608774.0,
+        "level_9": 46097222.0,
+        "level_merge": 8.0,
+        "timing_merging": 0.023287346,
+        "timing_total": 1.133470622,
+        "level_7": 46051649.0,
+        "merge_level_9": 2308619.0,
+        "level_5": 57880045.0,
+        "merge_level_7": 1990722.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.21852740593254566,
+        "eps_plus": 0.2274468918889761,
+        "runtime_s_minus": 1.4007432460784912,
+        "runtime_s_plus": 1.3881797790527344,
+        "minus": {
+          "stability_ari": 0.9570316330023724,
+          "stability_nmi": 0.9800370907586653
+        },
+        "plus": {
+          "stability_ari": 0.8947639816216816,
+          "stability_nmi": 0.9719570041610965
+        }
+      }
+    },
+    {
+      "delta": 0.01,
+      "L_gb": 4.0,
+      "threads": 24,
+      "eps": 0.266001370549202,
+      "minPts": 25,
+      "runtime_s": 2.806723117828369,
+      "metrics_computation_s": 0.004830121994018555,
+      "summary": {
+        "n_clusters": 120,
+        "noise": 4533,
+        "noise_frac": 0.08716972424137533,
+        "max_cluster_share": 0.14339833083342948,
+        "median_cluster_size": 96.5,
+        "p90_cluster_size": 800.0000000000015,
+        "p99_cluster_size": 6175.320000000008
+      },
+      "statistics": {
+        "merge_level_14": 4317384.0,
+        "level_15": 57240519.0,
+        "level_14": 57237255.0,
+        "merge_level_12": 4025414.0,
+        "level_12": 57722861.0,
+        "merge_level_11": 2909013.0,
+        "merge_level_10": 3038001.0,
+        "merge_level_15": 4914690.0,
+        "merge_level_5": 4576137.0,
+        "level_13": 57361290.0,
+        "timing_identify cp": 0.504652242,
+        "level_4": 78085043.0,
+        "merge_level_6": 3343603.0,
+        "merge_level_13": 4059546.0,
+        "merge_level_8": 2463099.0,
+        "merge_level_1": 104738954.0,
+        "level_2": 281055121.0,
+        "level_6": 60371950.0,
+        "level_3": 120546175.0,
+        "level_1": 1367343234.0,
+        "merge_level_0": 1128813856.0,
+        "level_11": 57325576.0,
+        "timing_identify bp": 3.018e-06,
+        "level_0": 1352078002.0,
+        "level_cp": 7.0,
+        "level_8": 57634784.0,
+        "timing_build ht": 0.755988877,
+        "merge_level_2": 19454996.0,
+        "merge_level_3": 7679828.0,
+        "level_10": 57209012.0,
+        "merge_level_4": 6924073.0,
+        "level_9": 56623627.0,
+        "level_merge": 7.0,
+        "timing_merging": 0.030493176,
+        "timing_total": 2.509959353,
+        "level_7": 56465460.0,
+        "merge_level_9": 2985708.0,
+        "level_5": 77645561.0,
+        "merge_level_7": 2208752.0
+      },
+      "quality_metrics": {
+        "silhouette": null,
+        "silhouette_sampled": false,
+        "davies_bouldin": null,
+        "calinski_harabasz": null,
+        "n_points_used": 0
+      },
+      "stability": {
+        "eps_minus": 0.26068134313821795,
+        "eps_plus": 0.271321397960186,
+        "runtime_s_minus": 2.8199474811553955,
+        "runtime_s_plus": 2.8117973804473877,
+        "minus": {
+          "stability_ari": 0.9682456717255106,
+          "stability_nmi": 0.9816806868507669
+        },
+        "plus": {
+          "stability_ari": 0.979169854318549,
+          "stability_nmi": 0.9846147775150594
+        }
+      }
+    }
+  ],
+  "notes": [
+    "No ground-truth labels used.",
+    "No ARI/NMI vs exact DBSCAN computed.",
+    "ARI/NMI are used only as stability measures between SRR runs at eps*(1\u00b1jitter).",
+    "eps candidates are derived from k-distance quantiles (k=minPts).",
+    "Quality metrics: Silhouette (higher better, [-1,1]), Davies-Bouldin (lower better, [0,\u221e)), Calinski-Harabasz (higher better, [0,\u221e)).",
+    "Silhouette computed on sample of 10000 points if dataset larger."
+  ]
+}

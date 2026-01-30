@@ -14,7 +14,7 @@ print("=" * 80)
 print("\n[1] Caricamento embeddings e labels...")
 
 embeddings_umap_50d = np.load('data/embeddings/instructor_umap_50d.npy')
-labels = np.load('data/experiments/scikit_results/instruct_hdbscan_labels.npy')
+labels = np.load('data/cluster/scikit_results/instruct_hdbscan_labels.npy')
 
 n_clusters = len(set(labels)) - (1 if -1 in labels else 0)
 n_noise = (labels == -1).sum()
