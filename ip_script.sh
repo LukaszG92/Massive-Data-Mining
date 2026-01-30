@@ -1,20 +1,38 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# --- CONFIG ---
-EXE="/mnt/c/Users/anton/PycharmProjects/Massive-Data-Mining/IP.LSH.DBSCAN/build/LSHDBSCAN_exec"
+# --- WORKDIR ---
+# Usa la directory corrente da cui lanci lo script
+WD="${WD:-$(pwd)}"
 
-# IMPORTANTE: metti qui il file NON normalizzato se vuoi usare -a (angular),
-# perché main_general.cc fa sempre normalizeData()+meanRemoveData() quando -a. [file:42]
-DATA="/mnt/c/Users/anton/PycharmProjects/Massive-Data-Mining/data/embeddings/alpaca_embeddings.txt"
+# (Variante più robusta, se preferisci: directory dello script)
+# WD="${WD:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)}"
 
-OUTDIR="/mnt/c/Users/anton/PycharmProjects/Massive-Data-Mining/data/embeddings/experiments"
-THREADS=32
+cd "$WD"
+
+# --- RELATIVE PATHS (relative to WD) ---
+EXE="${EXE:-IP.LSH.DBSCAN/build/LSHDBSCAN_exec}"
+DATA="${DATA:-data/embeddings/alpaca_embeddings.txt}"
+OUTDIR="${OUTDIR:-data/embeddings/experiments}"
+THREADS="${THREADS:-32}"
 
 EPS_LIST=(0.25 0.28 0.31 0.34)
 MINPTS_LIST=(20 30 40)
 L_LIST=(10 20)
 M_LIST=(12 18 24)
+
+# --- sanity checks ---
+if [[ ! -x "$EXE" ]]; then
+  echo "ERROR: EXE not found or not executable (relative to WD=$WD): $EXE" >&2
+  echo "Hint: build it, or pass EXE=relative/or/absolute/path" >&2
+  exit 1
+fi
+
+if [[ ! -f "$DATA" ]]; then
+  echo "ERROR: DATA not found (relative to WD=$WD): $DATA" >&2
+  echo "Hint: put embeddings there, or pass DATA=relative/or/absolute/path" >&2
+  exit 1
+fi
 
 mkdir -p "$OUTDIR"
 
@@ -33,15 +51,13 @@ for eps in "${EPS_LIST[@]}"; do
 
         echo "=== ${tag} ===" | tee "$logfile"
 
-        # Timestamp pre-run: serve per beccare l'idx generato in questo run
         start_epoch="$(date +%s)"
 
-        # timing "pulito" in secondi (real)
         elapsed_s=$({ /usr/bin/time -p \
           "$EXE" -f "$DATA" -a -e "$eps" -m "$mpts" -L "$L" -M "$M" -t "$THREADS" \
           1>>"$logfile" 2>>"$logfile" ; } 2>&1 | awk '/^real /{print $2}')
 
-        # Trova l'idx creato DOPO start_epoch con prefisso = DATA (come nel C++). [file:42]
+        # idx generato vicino al file DATA (prefisso = DATA_BASE come nel C++)
         idx=$(find "$DATA_DIR" -maxdepth 1 -type f \
           -name "${DATA_BASE}*.idx_concurrentlshdbscan" \
           -newermt "@$start_epoch" \
@@ -55,7 +71,6 @@ for eps in "${EPS_LIST[@]}"; do
         newidx="${OUTDIR}/labels_${tag}.idx_concurrentlshdbscan"
         mv -f "$idx" "$newidx"
 
-        # metriche dal file di label (una label per riga, -1 = noise)
         metrics_tsv=$(python3 - <<PY
 import numpy as np
 from collections import Counter

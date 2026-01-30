@@ -2,3 +2,7 @@
 /data/embeddings
 .venv/
 .venv_wsl
+# local outputs
+/diag_out/
+/embeddings/
+/iso_out/

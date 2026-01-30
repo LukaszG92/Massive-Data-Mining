@@ -15,24 +15,19 @@ INPUT_NPY = "data/all-MiniLM-L6-v2_mean_centered.npy"
 OUT_JSON = "data/srr_tuning_report5.json"
 
 # SRR params grid
-DELTAS = [0.01]  # probability of missing a point
-L_GBS = [3.0]  # memory constraint in GB
+DELTAS = [0.1, 0.01]
+L_GBS = [5.0, 10.0]
 THREADS = 24
 
 # DBSCAN params grid
-MINPTS_VALUES = [ 10, 12, 15, 18]
-EPS_QUANTILES = [
-    0.15, 0.17, 0.19,
-    0.21, 0.23, 0.25,
-    0.27, 0.29, 0.31,
-    0.33, 0.35
-]
+MINPTS_VALUES = [10, 15, 20, 30]
+EPS_QUANTILES = [0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80]
 
 KDIST_METRIC = "euclidean"
-MAX_EPS_PER_MINPTS = 10
+MAX_EPS_PER_MINPTS = 12
 
 # Stability check
-EPS_JITTER = 0.02  # +/-2%
+EPS_JITTER = 0.05
 
 # Ranking / filtering
 NOISE_MAX = 0.70
